@@ -9,6 +9,7 @@ Tunify Platform is a music streaming web application that allows users to create
 ![Tunify ERD Diagram](Tunify.png)
 
 
+
 ## Entity-Relationship Overview
 
 The Tunify Platform database is structured as follows:
