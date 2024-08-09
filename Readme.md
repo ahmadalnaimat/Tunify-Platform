@@ -35,3 +35,19 @@ The Tunify Platform database is structured as follows:
 - **Playlists** and **Songs** have a many-to-many relationship, managed through the **PlaylistSongs** table.
 - **Songs** belong to one **Artist** and one **Album**, forming a many-to-one relationship with both entities.
 - **Albums** and **Artists** also have a many-to-one relationship, where an artist can release multiple albums.
+
+## Repository Pattern
+
+### What is the Repository Pattern?
+
+The Repository Pattern is a way to manage how data is accessed in your application. It creates a separate layer that handles all interactions with the database, keeping your business logic clean and organized.
+
+### How It Helps Tunify Platform
+
+- **Organized Code**: Keeps data access code separate from business logic, making your code easier to understand and maintain.
+  
+- **Easy Updates**: You can change how data is accessed or stored without affecting the rest of your application.
+
+- **Reusability**: Makes it simple to use the same data access methods in different parts of your app.
+
+In Tunify Platform, using the Repository Pattern helps keep our code structured and manageable, making it easier to work with and update.

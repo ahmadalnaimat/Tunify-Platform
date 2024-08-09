@@ -14,6 +14,7 @@ namespace Tunify_Platform.Data
         public DbSet<PlaylistSongs> PlaylistSongs { get; set; }
         public DbSet<Song> songs { get; set; }
         public DbSet<Subscription> subscriptions { get; set; }
+        public DbSet<Artist> artists { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // example
@@ -47,6 +48,7 @@ namespace Tunify_Platform.Data
                 }
                 );
         }
+        public DbSet<Tunify_Platform.Models.Artist> Artist { get; set; } = default!;
 
     }
 
