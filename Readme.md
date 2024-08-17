@@ -51,3 +51,27 @@ The Repository Pattern is a way to manage how data is accessed in your applicati
 - **Reusability**: Makes it simple to use the same data access methods in different parts of your app.
 
 In Tunify Platform, using the Repository Pattern helps keep our code structured and manageable, making it easier to work with and update.
+
+1. **Navigation Properties**:
+   - Added navigation properties to the `Playlist`, `Song`, and `Artist` models to establish and manage relationships.
+
+2. **Routing for Playlist-Song Relationships**:
+   - Implemented an endpoint to add a song to a playlist:
+     - `POST api/playlists/{playlistId}/songs/{songId}`
+   - Added an endpoint to retrieve all songs in a playlist.
+
+3. **Routing for Artist-Song Relationships**:
+   - Implemented an endpoint to add a song to an artist:
+     - `POST api/artists/{artistId}/songs/{songId}`
+   - Added an endpoint to retrieve all songs by a specific artist.
+
+4. **Relationship Management**:
+   - Extended the `PlaylistService` with a method to handle adding a song to a playlist.
+   - Extended the `ArtistService` with a method to handle adding a song to an artist.
+
+5. **Database Updates**:
+   - Updated `OnModelCreating` in `TunifyDbContext` to define composite keys for join tables and seeded initial data for `Playlist`, `Song`, and `Artist` models.
+   - Applied necessary migrations to update the database schema.
+
+6. **Unit Testing**:
+   - Added unit tests using xUnit and mocks to verify the implementation of the new relationships and routing functionalities.
