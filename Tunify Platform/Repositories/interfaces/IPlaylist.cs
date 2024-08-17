@@ -9,5 +9,7 @@ namespace Tunify_Platform.Repositories.interfaces
         Task AddPlaylist(Playlist playlist);
         Task UpdatePlaylist(Playlist playlist);
         Task DeletePlaylist(int id);
+        Task AddSongToPlaylist(int playlistId, int songId);
+        Task<IEnumerable<Song>> GetSongsForPlaylist(int playlistId);
     }
 }
