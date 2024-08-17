@@ -44,5 +44,36 @@ namespace Tunify_Platform.Repositories.Services
             _context.Entry(playlist).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+        public async Task AddSongToPlaylist(int playlistId, int songId)
+        {
+            var playlist = await _context.playlists.Include(p => p.PlaylistSong)
+                                                   .FirstOrDefaultAsync(p => p.PlayListID == playlistId);
+            var song = await _context.songs.FindAsync(songId);
+
+            if (playlist == null || song == null)
+            {
+                throw new Exception("Playlist or Song not found.");
+            }
+
+            if (!playlist.PlaylistSong.Any(ps => ps.SongID == songId))
+            {
+                playlist.PlaylistSong.Add(new PlaylistSongs { PlaylistID = playlistId, SongID = songId });
+                await _context.SaveChangesAsync();
+            }
+        }
+        public async Task<IEnumerable<Song>> GetSongsForPlaylist(int playlistId)
+        {
+            var songs = await _context.playlists
+                                       .Where(p => p.PlayListID == playlistId)
+                                       .SelectMany(p => p.PlaylistSong)
+                                       .Select(ps => ps.Song)
+                                       .ToListAsync();
+            if (songs == null)
+            {
+                throw new Exception("Playlist not found or has no songs.");
+            }
+
+            return songs;
+        }
     }
 }

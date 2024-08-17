@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Tunify_Platform.Models;
 using Tunify_Platform.Repositories.interfaces;
-using Tunify_Platform.Repositories.Interfaces;
-
 namespace Tunify_Platform.Controllers
 {
     [Route("api/[controller]")]
@@ -96,5 +94,36 @@ namespace Tunify_Platform.Controllers
             await _artistService.DeleteArtist(id);
             return NoContent();
         }
+        [HttpGet("{artistId}/songs")]
+        public async Task<ActionResult<IEnumerable<Song>>> GetSongsByArtist(int artistId)
+        {
+            try
+            {
+                var songs = await _artistService.GetSongsByArtist(artistId);
+                if (songs == null || !songs.Any())
+                {
+                    return NotFound();
+                }
+                return Ok(songs);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+        [HttpPost("artists/{artistId}/songs/{songId}")]
+        public async Task<IActionResult> AddSongToArtist(int artistId, int songId)
+        {
+            try
+            {
+                await _artistService.AddSongToArtist(artistId, songId);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
     }
 }

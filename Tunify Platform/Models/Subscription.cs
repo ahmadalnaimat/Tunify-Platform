@@ -5,5 +5,6 @@
         public int SubscriptionID { get; set; }
         public string SubscriptionType { get; set; }
         public int Price { get; set; }
+        public User User { get; set; }
     }
 }
