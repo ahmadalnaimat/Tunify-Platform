@@ -12,8 +12,8 @@ using Tunify_Platform.Data;
 namespace Tunify_Platform.Migrations
 {
     [DbContext(typeof(TunifyDbContext))]
-    [Migration("20240816185954_test1")]
-    partial class test1
+    [Migration("20240819111048_test")]
+    partial class test
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
