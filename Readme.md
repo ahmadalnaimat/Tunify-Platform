@@ -75,3 +75,55 @@ In Tunify Platform, using the Repository Pattern helps keep our code structured 
 
 6. **Unit Testing**:
    - Added unit tests using xUnit and mocks to verify the implementation of the new relationships and routing functionalities.
+
+   Here's an updated section for your `README.md` that includes an explanation of Swagger UI and instructions on how to access and use it:
+
+---
+
+## Swagger UI Integration
+
+### What is Swagger UI?
+
+Swagger UI is an interactive API documentation tool that automatically generates and displays API documentation based on the project's code. It allows developers and testers to explore and test API endpoints directly within a web browser, making it easier to understand and interact with the API.
+
+### How It Helps Tunify Platform
+
+- **Interactive API Documentation**: Provides a user-friendly interface to interact with the Tunify Platform API.
+  
+- **Ease of Testing**: Allows you to test different API endpoints without the need for additional tools.
+  
+- **Live API Testing**: Enables real-time testing of your API, which is particularly useful during development and debugging.
+
+### Accessing Swagger UI
+
+1. **Starting the Application**:
+   - Ensure the Tunify Platform application is running. You can start the application using your preferred method, such as through Visual Studio, the .NET CLI, or Docker.
+
+2. **Navigating to Swagger UI**:
+   - Open your web browser and navigate to the following URL:
+     ```
+     http://localhost:{PORT}/
+     ```
+   - Replace `{PORT}` with the port number on which your application is running. By default, this is usually `5000` for HTTP or `5001` for HTTPS.
+
+3. **Exploring the API**:
+   - On the Swagger UI homepage, you'll see a list of available API endpoints categorized by controllers.
+   - Click on any endpoint to expand it and see details such as the request method, parameters, and response types.
+   - You can test the endpoints directly from this interface by clicking the "Try it out" button.
+
+### Example Endpoints
+
+- **Get All Playlists**: 
+  - `GET /api/playlists`
+  - Use this endpoint to retrieve a list of all playlists in the system.
+  
+- **Add a Song to a Playlist**:
+  - `POST /api/playlists/{playlistId}/songs/{songId}`
+  - This endpoint allows you to add a specific song to a playlist.
+
+### Customizing Swagger UI
+
+The Swagger UI for Tunify Platform is configured to display at the root URL (`http://localhost:{PORT}/`). The JSON documentation is accessible at:
+```
+http://localhost:{PORT}/api/v1/swagger.json
+```
