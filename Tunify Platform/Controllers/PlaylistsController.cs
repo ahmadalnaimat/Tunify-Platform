@@ -95,7 +95,7 @@ namespace Tunify_Platform.Controllers
             return NoContent();
         }
         // POST: api/Playlists/{playlistId}/songs/{songId}
-        [HttpPost("artists/{artistId}/songs/{songId}")]
+        [HttpPost("playlist/{playlistId}/songs/{songId}")]
         public async Task<IActionResult> AddSongToPlaylist(int playlistId, int songId)
         {
             try

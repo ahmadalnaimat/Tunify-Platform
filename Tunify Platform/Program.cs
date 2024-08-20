@@ -11,7 +11,11 @@ namespace Tunify_Platform
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
 
             string ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<TunifyDbContext>(option => option.UseSqlServer(ConnectionString));
