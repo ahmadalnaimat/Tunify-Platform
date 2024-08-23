@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Tunify_Platform.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Tunify_Platform.Data
 {
-    public class TunifyDbContext : DbContext
+    public class TunifyDbContext : IdentityDbContext<IdentityUser>
     {
         public TunifyDbContext(DbContextOptions<TunifyDbContext> options) : base(options) 
         { 
@@ -17,7 +19,7 @@ namespace Tunify_Platform.Data
         public DbSet<Artist> artists { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region
+            #region Album config
             modelBuilder.Entity<Album>()
                 .HasKey(pk => pk.AlbumID);
             modelBuilder.Entity<Album>()
@@ -25,7 +27,7 @@ namespace Tunify_Platform.Data
                 .WithOne(m => m.Album)
                 .HasForeignKey(m => m.AlbumID);
             #endregion
-            #region
+            #region Artist config
             modelBuilder.Entity<Artist>()
                 .HasKey(pk => pk.ArtistID);
             modelBuilder.Entity<Artist>()
@@ -33,7 +35,7 @@ namespace Tunify_Platform.Data
                 .WithOne(m => m.Artist)
                 .HasForeignKey(m => m.ArtistID);
             #endregion
-            #region
+            #region playlistsongs config
             modelBuilder.Entity<PlaylistSongs>()
                 .HasKey(pk => pk.PlaylistSongsID);
             modelBuilder.Entity<PlaylistSongs>()
@@ -45,7 +47,7 @@ namespace Tunify_Platform.Data
                 .WithMany(m => m.PlaylistSong)
                 .HasForeignKey(ps => ps.SongID);
             #endregion
-            #region
+            #region song config
             modelBuilder.Entity<Song>()
                 .HasKey(pk=> pk.SongID);
             modelBuilder.Entity<Song>()
@@ -54,7 +56,7 @@ namespace Tunify_Platform.Data
                 .HasForeignKey(s => s.ArtistID)
                 .OnDelete(DeleteBehavior.Restrict);
             #endregion
-            #region
+            #region sub config
             modelBuilder.Entity<Subscription>()
                 .HasKey(pk=>pk.SubscriptionID);
             modelBuilder.Entity<Subscription>()
@@ -63,7 +65,7 @@ namespace Tunify_Platform.Data
                 .HasForeignKey<User>(m => m.SubscriptionID)
                 .OnDelete(DeleteBehavior.Cascade);
             #endregion
-            #region
+            #region User config
             modelBuilder.Entity<User>()
                 .HasKey (pk=>pk.UserID);
             modelBuilder.Entity<User>()

@@ -3,6 +3,7 @@ using Tunify_Platform.Data;
 using Tunify_Platform.Repositories.Services;
 using Tunify_Platform.Repositories.interfaces;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity;
 
 namespace Tunify_Platform
 {
@@ -19,10 +20,13 @@ namespace Tunify_Platform
 
             string ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<TunifyDbContext>(option => option.UseSqlServer(ConnectionString));
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+                 .AddEntityFrameworkStores<TunifyDbContext>();
             builder.Services.AddScoped<IUser, UserService>();
             builder.Services.AddScoped<IPlaylist, PlaylistService>();
             builder.Services.AddScoped<ISong, SongService>();
             builder.Services.AddScoped<IArtist, ArtistService>();
+            builder.Services.AddScoped<IAccount, IdentityAccountService>();
 
             builder.Services.AddSwaggerGen
                 (option =>
@@ -35,10 +39,9 @@ namespace Tunify_Platform
                         });
                     }
                 );
-
-
             var app = builder.Build();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseSwagger(
                 option =>
                 {
