@@ -127,3 +127,116 @@ The Swagger UI for Tunify Platform is configured to display at the root URL (`ht
 ```
 http://localhost:{PORT}/api/v1/swagger.json
 ```
+
+
+
+## Identity Setup
+
+### Overview
+
+Tunify Platform utilizes ASP.NET Core Identity to handle user authentication and authorization. This setup enables users to securely register, log in, and manage their accounts within the platform. The Identity framework provides a comprehensive solution for managing user roles, passwords, and authentication states.
+
+### Identity Configuration
+
+In the `Program.cs` file, Identity services are configured to use the `TunifyDbContext` for storing user information:
+
+```csharp
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<TunifyDbContext>();
+```
+
+The middleware configuration ensures that the application uses authentication mechanisms:
+
+```csharp
+app.UseAuthentication();
+```
+
+### Identity Features
+
+- **Registration**: Users can create a new account by providing their username, email, and password.
+- **Login**: Registered users can log in to the platform using their credentials.
+- **Logout**: Authenticated users can log out, clearing their authentication cookies.
+
+### Using the Registration, Login, and Logout Features
+
+#### 1. Registration
+
+To register a new user account:
+
+- **Endpoint**: `POST /api/Account/Register`
+- **DTO**: `RegisterDto`
+- **Required Fields**:
+  - `Username`: The desired username for the account.
+  - `Email`: The user's email address.
+  - `Password`: A secure password for the account.
+
+**Example Request**:
+```json
+{
+  "Username": "johndoe",
+  "Email": "johndoe@example.com",
+  "Password": "StrongPassword123"
+}
+```
+
+**Example Response**:
+- On successful registration: `200 OK` with a message `"Registration successful"`
+- On failure: `400 BadRequest` with error details.
+
+#### 2. Login
+
+To log in as a registered user:
+
+- **Endpoint**: `POST /api/Account/Login`
+- **DTO**: `LoginDto`
+- **Required Fields**:
+  - `Username`: The username of the account.
+  - `Password`: The password associated with the account.
+
+**Example Request**:
+```json
+{
+  "Username": "johndoe",
+  "Password": "StrongPassword123"
+}
+```
+
+**Example Response**:
+- On successful login: `200 OK` with a message `"Login successful"`
+- On failure: `401 Unauthorized` with an error message `"Invalid login attempt"`
+
+#### 3. Logout
+
+To log out the currently authenticated user:
+
+- **Endpoint**: `POST /api/Account/Logout`
+
+**Example Response**:
+- On successful logout: `200 OK` with a message `"Logout successful"`
+
+### Testing Identity Features via Swagger UI
+
+Using Swagger UI, you can interact with the Identity features in a user-friendly interface:
+
+1. **Access Swagger UI**:
+   - Navigate to `http://localhost:{PORT}/`
+   - Look for the `Account` controller in the list of available endpoints.
+
+2. **Register a User**:
+   - Expand the `POST /api/Account/Register` endpoint.
+   - Click `Try it out`, fill in the required fields, and execute the request.
+
+3. **Log in a User**:
+   - Expand the `POST /api/Account/Login` endpoint.
+   - Provide the username and password, then execute the request to authenticate.
+
+4. **Log out a User**:
+   - Expand the `POST /api/Account/Logout` endpoint.
+   - Execute the request to log out the authenticated user.
+
+### Error Handling and Feedback
+
+Tunify Platform implements robust error handling mechanisms for Identity operations. Users receive clear feedback when registration, login, or logout actions fail, allowing for a smoother user experience. Additionally, errors are logged for troubleshooting purposes.
+
+
+You can add this section to your `README.md` to provide clear instructions on how to use the Identity features in your application.
