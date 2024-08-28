@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tunify_Platform.Models;
 using Tunify_Platform.Repositories.interfaces;
@@ -8,6 +9,7 @@ namespace Tunify_Platform.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SongsController : ControllerBase
     {
         private readonly ISong _songService;  // Changed from _songsrepositorie to _songService

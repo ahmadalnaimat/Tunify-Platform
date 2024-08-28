@@ -4,6 +4,7 @@ using Tunify_Platform.Repositories.Services;
 using Tunify_Platform.Repositories.interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Tunify_Platform
 {
@@ -27,7 +28,26 @@ namespace Tunify_Platform
             builder.Services.AddScoped<ISong, SongService>();
             builder.Services.AddScoped<IArtist, ArtistService>();
             builder.Services.AddScoped<IAccount, IdentityAccountService>();
-
+            builder.Services.AddScoped<JwtTokenService>();
+            builder.Services.AddAuthentication(
+                options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                }
+            )
+                .AddJwtBearer(
+                    options =>
+                    {
+                        options.TokenValidationParameters = JwtTokenService.ValidateToken(builder.Configuration);
+                    }
+                );
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("UserOnly", policy => policy.RequireRole("User"));
+            });
             builder.Services.AddSwaggerGen
                 (option =>
                     {
