@@ -238,5 +238,3 @@ Using Swagger UI, you can interact with the Identity features in a user-friendly
 
 Tunify Platform implements robust error handling mechanisms for Identity operations. Users receive clear feedback when registration, login, or logout actions fail, allowing for a smoother user experience. Additionally, errors are logged for troubleshooting purposes.
 
-
-You can add this section to your `README.md` to provide clear instructions on how to use the Identity features in your application.
