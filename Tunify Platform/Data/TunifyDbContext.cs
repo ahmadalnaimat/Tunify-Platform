@@ -74,6 +74,34 @@ namespace Tunify_Platform.Data
             #endregion
             base.OnModelCreating(modelBuilder);
 
+            // Seed roles
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
+                new IdentityRole { Name = "User", NormalizedName = "USER" }
+            );
+
+            // Seed a default admin user
+            var adminUser = new IdentityUser
+            {
+                UserName = "admin",
+                NormalizedUserName = "ADMIN",
+                Email = "admin@tunify.com",
+                NormalizedEmail = "ADMIN@TUNIFY.COM",
+                EmailConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                Id = "admin-id"
+            };
+
+            adminUser.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(adminUser, "Admin@123");
+
+            modelBuilder.Entity<IdentityUser>().HasData(adminUser);
+
+            // Assign the admin user to the admin role
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = "admin-role-id",
+                UserId = "admin-id"
+            });
             // Seed data for Artist
             modelBuilder.Entity<Artist>().HasData(
                 new Artist { ArtistID = 1, Name = "Artist 1", Bio = "Bio for Artist 1" },

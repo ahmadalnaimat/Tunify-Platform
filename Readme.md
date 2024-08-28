@@ -238,5 +238,43 @@ Using Swagger UI, you can interact with the Identity features in a user-friendly
 
 Tunify Platform implements robust error handling mechanisms for Identity operations. Users receive clear feedback when registration, login, or logout actions fail, allowing for a smoother user experience. Additionally, errors are logged for troubleshooting purposes.
 
+Here's the simplified content formatted in Markdown:
 
-You can add this section to your `README.md` to provide clear instructions on how to use the Identity features in your application.
+
+## Authorization
+
+### Role-Based Authorization
+
+Role-based authorization restricts access to features based on user roles like "Admin", "Editor", and "User".
+
+- **Setup Roles**:
+  - Define roles in  `Program.cs` during app startup.
+  - Assign roles to users using `UserManager`.
+
+- **Protect Endpoints**:
+  - Use `[Authorize(Roles = "Admin")]` to secure controllers or actions.
+  
+  Example:
+  ```csharp
+  [Authorize]
+  public class AdminController : ControllerBase
+  {
+      // Authorized actions here
+  }
+  ```
+
+### Policy-Based Authorization
+
+Policy-based authorization provides more fine-grained control over access by defining custom policies.
+
+- **Define Policies**:
+  - In `Program.cs`, define policies:
+    ```csharp
+    services.AddAuthorization(options =>
+    {
+        options.AddPolicy("RequireAdmin", policy => policy.RequireRole("Admin"));
+    });
+    ```
+
+- **Apply Policies**:
+  - Use `[Authorize(Policy = "RequireAdmin")]` to apply policies to controllers or actions.

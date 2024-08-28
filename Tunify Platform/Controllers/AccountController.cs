@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Framework;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -48,8 +49,11 @@ namespace Tunify_Platform.Controllers
                 ModelState.AddModelError(string.Empty, "Invalid login attempt");
                 return Unauthorized(ModelState);
             }
+            var user = await _accountService.GetUserByUsername(loginDto.Username);
+            var token = await _accountService.GenerateJwtToken(user);
             return Ok("Login successful");
         }
+        [Authorize]
         [HttpPost("Logout")]
         public async Task<IActionResult> Logout()
         {
