@@ -76,8 +76,8 @@ namespace Tunify_Platform.Data
 
             // Seed roles
             modelBuilder.Entity<IdentityRole>().HasData(
-                new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
-                new IdentityRole { Name = "User", NormalizedName = "USER" }
+                new IdentityRole { Id = "admin-role-id", Name = "Admin", NormalizedName = "ADMIN" },
+                new IdentityRole { Id = "user-role-id", Name = "User", NormalizedName = "USER" }
             );
 
             // Seed a default admin user
